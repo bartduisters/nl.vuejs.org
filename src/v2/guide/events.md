@@ -1,72 +1,72 @@
 ---
-title: Event Handling
+title: Afhandelen van 'events'
 type: guide
 order: 9
 ---
 
-## Listening to Events
+## Luisteren naar 'events'
 
-We can use the `v-on` directive to listen to DOM events and run some JavaScript when they're triggered.
+Het is mogelijk om met de `v-on` 'directive' naar DOM-'events' te luisteren en JavaScript uit te voeren wanneer ze geactiveerd worden.
 
-For example:
+Bijvoorbeeld:
 
 ``` html
-<div id="example-1">
-  <button v-on:click="counter += 1">Add 1</button>
-  <p>The button above has been clicked {{ counter }} times.</p>
+<div id="voorbeeld-1">
+  <button v-on:click="teller += 1">1 toevoegen</button>
+  <p>Bovenstaande knop is {{ teller }} geklikt.</p>
 </div>
 ```
 ``` js
-var example1 = new Vue({
-  el: '#example-1',
+var voorbeeld1 = new Vue({
+  el: '#voorbeeld-1',
   data: {
-    counter: 0
+    teller: 0
   }
 })
 ```
 
-Result:
+Resultaat:
 
 {% raw %}
-<div id="example-1" class="demo">
-  <button v-on:click="counter += 1">Add 1</button>
-  <p>The button above has been clicked {{ counter }} times.</p>
+<div id="voorbeeld-1" class="demo">
+  <button v-on:click="teller += 1">1 toevoegen</button>
+  <p>Bovenstaande knop is {{ teller }} geklikt.</p>
 </div>
 <script>
-var example1 = new Vue({
-  el: '#example-1',
+var voorbeeld1 = new Vue({
+  el: '#voorbeeld-1',
   data: {
-    counter: 0
+    teller: 0
   }
 })
 </script>
 {% endraw %}
 
-## Method Event Handlers
+## Afhandelen van een 'event' met een methode
 
-The logic for many event handlers will be more complex though, so keeping your JavaScript in the value of the `v-on` attribute isn't feasible. That's why `v-on` can also accept the name of a method you'd like to call.
+Vaak zal de logica te complex zijn om de JavaScript in de waarde van het `v-on`-attribuut te houden. Daarom accepteert `v-on` ook de naam van een methode die uitgevoerd moet worden wanneer het 'event' geactiveerd wordt.
 
-For example:
+Bijvoorbeeld:
 
 ``` html
-<div id="example-2">
-  <!-- `greet` is the name of a method defined below -->
-  <button v-on:click="greet">Greet</button>
+<div id="voorbeeld-2">
+  <!-- `groet` is de naam van de methode (hieronder gedefinieerd) -->
+  <button v-on:click="groet">Groet</button>
 </div>
 ```
 
 ``` js
-var example2 = new Vue({
-  el: '#example-2',
+var voorbeeld2 = new Vue({
+  el: '#voorbeeld-2',
   data: {
-    name: 'Vue.js'
+    naam: 'John Duck'
   },
-  // define methods under the `methods` object
+  // definieer methodes onder het `methods`-object
   methods: {
-    greet: function (event) {
-      // `this` inside methods points to the Vue instance
-      alert('Hello ' + this.name + '!')
-      // `event` is the native DOM event
+    groet: function (event) {
+      // `this` in 'methods' verwijst naar de Vue-instantie
+      alert('Hallo ' + this.naam + '!')
+      // `'event'` is het oorspronkelijke DOM 'event'
       if (event) {
         alert(event.target.tagName)
       }
@@ -74,25 +74,25 @@ var example2 = new Vue({
   }
 })
 
-// you can invoke methods in JavaScript too
-example2.greet() // => 'Hello Vue.js!'
+// het is mogelijk om methodes aan te roepen in JavaScript
+voorbeeld2.groet() // => 'Hallo John Duck!'
 ```
 
-Result:
+Resultaat:
 
 {% raw %}
-<div id="example-2" class="demo">
-  <button v-on:click="greet">Greet</button>
+<div id="voorbeeld-2" class="demo">
+  <button v-on:click="groet">Groet</button>
 </div>
 <script>
-var example2 = new Vue({
-  el: '#example-2',
+var voorbeeld2 = new Vue({
+  el: '#voorbeeld-2',
   data: {
-    name: 'Vue.js'
+    naam: 'John Duck'
   },
   methods: {
-    greet: function (event) {
-      alert('Hello ' + this.name + '!')
+    groet: function (event) {
+      alert('Hello ' + this.naam + '!')
       if (event) {
         alert(event.target.tagName)
       }
@@ -102,69 +102,69 @@ var example2 = new Vue({
 </script>
 {% endraw %}
 
-## Methods in Inline Handlers
+## Methodes direct afhandelen
 
-Instead of binding directly to a method name, we can also use methods in an inline JavaScript statement:
+In plaats van de methodenaam te koppelen aan het 'event', is het ook mogelijk om de methodes direct te koppelen:
 
 ``` html
-<div id="example-3">
-  <button v-on:click="say('hi')">Say hi</button>
-  <button v-on:click="say('what')">Say what</button>
+<div id="voorbeeld-3">
+  <button v-on:click="zeg('hallo')">Zeg hallo</button>
+  <button v-on:click="zeg('wat')">Zeg wat</button>
 </div>
 ```
 ``` js
 new Vue({
-  el: '#example-3',
+  el: '#voorbeeld-3',
   methods: {
-    say: function (message) {
-      alert(message)
+    zeg: function (bericht) {
+      alert(bericht)
     }
   }
 })
 ```
 
-Result:
+Resultaat:
 {% raw %}
-<div id="example-3" class="demo">
-  <button v-on:click="say('hi')">Say hi</button>
-  <button v-on:click="say('what')">Say what</button>
+<div id="voorbeeld-3" class="demo">
+  <button v-on:click="zeg('hallo')">Zeg hallo</button>
+  <button v-on:click="zeg('wat')">Zeg wat</button>
 </div>
 <script>
 new Vue({
-  el: '#example-3',
+  el: '#voorbeeld-3',
   methods: {
-    say: function (message) {
-      alert(message)
+    zeg: function (bericht) {
+      alert(bericht)
     }
   }
 })
 </script>
 {% endraw %}
 
-Sometimes we also need to access the original DOM event in an inline statement handler. You can pass it into a method using the special `$event` variable:
+Wanneer het het nodig is om toegang te hebben tot het originele DOM 'event' in een directe koppeling, is het mogelijk om de speciale `$event`-variabele door te geven aan een methode:
 
 ``` html
-<button v-on:click="warn('Form cannot be submitted yet.', $event)">
-  Submit
+<button v-on:click="waarschuwing('Formulier kan nog niet worden ingediend.', $event)">
+  Indienen
 </button>
 ```
 
 ``` js
 // ...
 methods: {
-  warn: function (message, event) {
-    // now we have access to the native event
+  waarschuwing: function (bericht, event) {
+    // er is toegang tot het oorspronkelijke 'event'
     if (event) event.preventDefault()
-    alert(message)
+    alert(bericht)
   }
 }
 ```
 
 ## 'Event'-modificaties
 
-It is a very common need to call `event.preventDefault()` or `event.stopPropagation()` inside event handlers. Although we can do this easily inside methods, it would be better if the methods can be purely about data logic rather than having to deal with DOM event details.
+Het komt vaak voor dat `event.preventDefault()` of `event.stopPropagation()` aangeroepen worden bij het afhandelen van een 'event'. Ook al is het mogelijk om dit makkelijk te doen in methodes, is het beter dat methodes zich enkel bezig houden met de datalogica in plaats van het afhandelen van een DOM 'event'.
 
-To address this problem, Vue provides **event modifiers** for `v-on`. Recall that modifiers are directive postfixes denoted by a dot.
+Om dit probleem op te lossen voorziet Vue **'event'-modificaties** voor `v-on`. Modificaties zijn achtervoegsels op een 'directive' aangeduid met een punt.
 
 - `.stop`
 - `.prevent`
@@ -174,34 +174,35 @@ To address this problem, Vue provides **event modifiers** for `v-on`. Recall tha
 - `.passive`
 
 ``` html
-<!-- the click event's propagation will be stopped -->
-<a v-on:click.stop="doThis"></a>
+<!-- de propagatie van een klik 'event' zal gestopt worden -->
+<a v-on:click.stop="doeDit"></a>
 
-<!-- the submit event will no longer reload the page -->
-<form v-on:submit.prevent="onSubmit"></form>
+<!-- het 'submit event' zal de pagina niet herladen -->
+<form v-on:submit.prevent="bijIndienen"></form>
 
-<!-- modifiers can be chained -->
-<a v-on:click.stop.prevent="doThat"></a>
+<!-- modificaties kunnen achter elkaar gebruikt worden -->
+<a v-on:click.stop.prevent="doeDat"></a>
 
-<!-- just the modifier -->
+<!-- enkel de modificatie -->
 <form v-on:submit.prevent></form>
 
-<!-- use capture mode when adding the event listener -->
-<!-- i.e. an event targeting an inner element is handled here before being handled by that element -->
-<div v-on:click.capture="doThis">...</div>
+<!-- 'capture'-modus gebruiken bij het toevoegen van het luisteren naar een 'event' -->
+<!-- dit betekent dat wanneer een 'event' van een element in de 'div' geactiveerd wordt, 
+     het eerst hier zal afgehandeld worden voordat het element zelf het 'event' zal afhandelen -->
+<div v-on:click.capture="doeDit">...</div>
 
-<!-- only trigger handler if event.target is the element itself -->
-<!-- i.e. not from a child element -->
-<div v-on:click.self="doThat">...</div>
+<!-- handel het 'event' enkel af wanneer 'event.target' het element zelf is -->
+<!-- dit betekent dat 'events' van onderliggende elementen niet zorgen voor het uitvoeren van 'doeDat' -->
+<div v-on:click.self="doeDat">...</div>
 ```
 
-<p class="tip">Order matters when using modifiers because the relevant code is generated in the same order. Therefore using `v-on:click.prevent.self` will prevent **all clicks** while `v-on:click.self.prevent` will only prevent clicks on the element itself.</p>
+<p class="tip">De volgorde van het gebruik van modificaties maakt uit, aangezien de relevante code gegenereerd is in dezelfde volgorde. `v-on:click.prevent.self` zal **alle klikken** voorkomen, `v-on:click.self.prevent` zal enkel de klikken op dat element voorkomen.</p>
 
-> New in 2.1.4+
+> Nieuw in 2.1.4+
 
 ``` html
-<!-- the click event will be triggered at most once -->
-<a v-on:click.once="doThis"></a>
+<!-- het klik 'event' zal maximum één keer activeren -->
+<a v-on:click.once="doeDit"></a>
 ```
 
 Unlike the other modifiers, which are exclusive to native DOM events, the `.once` modifier can also be used on [component events](components-custom-events.html). If you haven't read about components yet, don't worry about this for now.
