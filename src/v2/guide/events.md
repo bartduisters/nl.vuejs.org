@@ -6,7 +6,7 @@ order: 9
 
 ## Luisteren naar 'events'
 
-Het is mogelijk om met de `v-on` 'directive' naar DOM-'events' te luisteren en JavaScript uit te voeren wanneer ze geactiveerd worden.
+Het is mogelijk om met de `v-on` 'directive' naar DOM 'events' te luisteren en JavaScript uit te voeren wanneer ze geactiveerd worden.
 
 Bijvoorbeeld:
 
@@ -205,55 +205,55 @@ Om dit probleem op te lossen voorziet Vue **'event'-modificaties** voor `v-on`. 
 <a v-on:click.once="doeDit"></a>
 ```
 
-Unlike the other modifiers, which are exclusive to native DOM events, the `.once` modifier can also be used on [component events](components-custom-events.html). If you haven't read about components yet, don't worry about this for now.
+In tegenstelling tot andere modificaties die exclusief zijn voor oorspronkelijke DOM 'events', kan de `.once`-modificatie ook gebruikt worden op ['events' van een component](components-custom-events.html). Indien er nog geen kennis is omtrent componenten, kan dit genegeerd worden voor nu.
 
-> New in 2.3.0+
+> Nieuw in 2.3.0+
 
-Vue also offers the `.passive` modifier, corresponding to [`addEventListener`'s `passive` option](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters).
+Voe voorziet ook de `.passive`-modificatie, overeenkomend met de [`addEventListener``passive` optie](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters).
 
 ``` html
-<!-- the scroll event's default behavior (scrolling) will happen -->
-<!-- immediately, instead of waiting for `onScroll` to complete  -->
-<!-- in case it contains `event.preventDefault()`                -->
+<!-- het standaard gedrag van het 'scroll event' (scrollen) zal   -->
+<!-- meteen plaatsvinden, in plaats van te wachten tot `onScroll` -->
+<!-- klaar is, in het geval dat het `event.preventDefault() bevat -->
 <div v-on:scroll.passive="onScroll">...</div>
 ```
 
-The `.passive` modifier is especially useful for improving performance on mobile devices.
+De `.passive`-modificatie is vooral nuttig om de prestaties op mobiele toestellen te verbeteren.
 
-<p class="tip">Don't use `.passive` and `.prevent` together, because `.prevent` will be ignored and your browser will probably show you a warning. Remember, `.passive` communicates to the browser that you _don't_ want to prevent the event's default behavior.</p>
+<p class="tip"> Gebruik `.passive` en `.prevent` niet tegelijkertijd. `.prevent` zal genegeerd worden en de browser zal waarschijnlijk een waarschuwing tonen. Herinner, `.passive` communiceert naar de browser dat het standaard gedrag _niet_ voorkomen moet worden.</p>
 
-## Key Modifiers
+## Toetsmodificaties
 
-When listening for keyboard events, we often need to check for specific keys. Vue allows adding key modifiers for `v-on` when listening for key events:
-
-``` html
-<!-- only call `vm.submit()` when the `key` is `Enter` -->
-<input v-on:keyup.enter="submit">
-```
-
-You can directly use any valid key names exposed via [`KeyboardEvent.key`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) as modifiers by converting them to kebab-case.
+Wanneer er naar 'events' van het toetsenbord geluisterd wordt, komt het vaak voor dat er naar een specifieke toets geluisterd moet worden. Vue laat toe om toetsmodificaties toe te voegen aan `v-on` wanneer er geluisterd wordt naar toestenbord 'events':
 
 ``` html
-<input v-on:keyup.page-down="onPageDown">
+<!-- roep `vm.enterIsGeklikt()` alleen aan wanneer de `toets` (in het Engels `key`, vandaar `keyup.enter`) `enter` is -->
+<input v-on:keyup.enter="enterIsGeklikt">
 ```
 
-In the above example, the handler will only be called if `$event.key` is equal to `'PageDown'`.
-
-### Key Codes
-
-<p class="tip">The use of `keyCode` events [is deprecated](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode) and may not be supported in new browsers.</p>
-
-Using `keyCode` attributes is also permitted:
+Het is mogelijk om alle geldige namen van toetsen die ter beschikking gesteld worden via [`KeyboardEvent.key`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) te gebruiken als modificaties door ze te converteren naar 'kebab-case'.
 
 ``` html
-<input v-on:keyup.13="submit">
+<input v-on:keyup.page-down="PageDownIsGeklikt">
 ```
 
-Vue provides aliases for the most commonly used key codes when necessary for legacy browser support:
+In bovenstaand voorbeeld zal de methode 'PageDownIsGeklikt' alleen aangeroepen worden wanneer `$event.key` gelijk is aan `'PageDown'`.
+
+### Toetscodes
+
+<p class="tip">Het gebruik van toetscode (`keyCode`) 'events' [is verouderd](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode) en wordt mogelijk niet ondersteund in nieuwe browsers.</p>
+
+Het gebruik van een `keyCode`-attribuut is toegestaan (maar verouderd):
+
+``` html
+<input v-on:keyup.13="indienen">
+```
+
+Vue voorziet aliassen voor de meest voorkomende toetscodes indien nodig voor het ondersteunen van oudere browsers:
 
 - `.enter`
 - `.tab`
-- `.delete` (captures both "Delete" and "Backspace" keys)
+- `.delete` (vangt zowel "Delete"- als "Backspace"-toetsen op)
 - `.esc`
 - `.space`
 - `.up`
@@ -261,7 +261,7 @@ Vue provides aliases for the most commonly used key codes when necessary for leg
 - `.left`
 - `.right`
 
-<p class="tip">A few keys (`.esc` and all arrow keys) have inconsistent `key` values in IE9, so these built-in aliases should be preferred if you need to support IE9.</p>
+<p class="tip">Een paar toetsen (`.esc` en alle pijltoetsen) hebben inconsistente `'key'`-waarden in IE9, het is aangeraden de aangeboden aliassen te gebruiken indien IE9 ondersteunt moet worden.</p>
 
 You can also [define custom key modifier aliases](../api/#keyCodes) via the global `config.keyCodes` object:
 
