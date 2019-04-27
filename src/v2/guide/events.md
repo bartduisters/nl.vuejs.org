@@ -92,7 +92,7 @@ var voorbeeld2 = new Vue({
   },
   methods: {
     groet: function (event) {
-      alert('Hello ' + this.naam + '!')
+      alert('Hallo ' + this.naam + '!')
       if (event) {
         alert(event.target.tagName)
       }
@@ -141,7 +141,7 @@ new Vue({
 </script>
 {% endraw %}
 
-Wanneer het het nodig is om toegang te hebben tot het originele DOM 'event' in een directe koppeling, is het mogelijk om de speciale `$event`-variabele door te geven aan een methode:
+Wanneer het nodig is om toegang te hebben tot het originele DOM 'event' in een directe koppeling, is het mogelijk om de speciale `$event`-variabele door te geven aan een methode:
 
 ``` html
 <button v-on:click="waarschuwing('Formulier kan nog niet worden ingediend.', $event)">
@@ -162,7 +162,7 @@ methods: {
 
 ## 'Event'-modificaties
 
-Het komt vaak voor dat `event.preventDefault()` of `event.stopPropagation()` aangeroepen worden bij het afhandelen van een 'event'. Ook al is het mogelijk om dit makkelijk te doen in methodes, is het beter dat methodes zich enkel bezig houden met de datalogica in plaats van het afhandelen van een DOM 'event'.
+Het komt vaak voor dat `event.preventDefault()` of `event.stopPropagation()` aangeroepen worden bij het afhandelen van een 'event'. Ook al is het mogelijk om dit makkelijk te doen in methodes, is het beter dat methodes zich alleen bezig houden met de datalogica in plaats van het afhandelen van een DOM 'event'.
 
 Om dit probleem op te lossen voorziet Vue **'event'-modificaties** voor `v-on`. Modificaties zijn achtervoegsels op een 'directive' aangeduid met een punt.
 
@@ -196,7 +196,7 @@ Om dit probleem op te lossen voorziet Vue **'event'-modificaties** voor `v-on`. 
 <div v-on:click.self="doeDat">...</div>
 ```
 
-<p class="tip">De volgorde van het gebruik van modificaties maakt uit, aangezien de relevante code gegenereerd is in dezelfde volgorde. `v-on:click.prevent.self` zal **alle klikken** voorkomen, `v-on:click.self.prevent` zal enkel de klikken op dat element voorkomen.</p>
+<p class="tip">De volgorde van het gebruik van modificaties maakt uit, aangezien de relevante code gegenereerd is in dezelfde volgorde. `v-on:click.prevent.self` zal **alle klikken** voorkomen, `v-on:click.self.prevent` zal alleen de klikken op dat element voorkomen.</p>
 
 > Nieuw in 2.1.4+
 
@@ -205,7 +205,7 @@ Om dit probleem op te lossen voorziet Vue **'event'-modificaties** voor `v-on`. 
 <a v-on:click.once="doeDit"></a>
 ```
 
-In tegenstelling tot andere modificaties die exclusief zijn voor oorspronkelijke DOM 'events', kan de `.once`-modificatie ook gebruikt worden op ['events' van een component](components-custom-events.html). Indien er nog geen kennis is omtrent componenten, kan dit genegeerd worden voor nu.
+In tegenstelling tot andere modificaties die exclusief zijn voor oorspronkelijke DOM 'events', kan de `.once`-modificatie ook gebruikt worden op ['events' van een component](components-custom-events.html). Indien er nog geen kennis is over componenten, kan dit genegeerd worden voor nu.
 
 > Nieuw in 2.3.0+
 
@@ -263,71 +263,71 @@ Vue voorziet aliassen voor de meest voorkomende toetscodes indien nodig voor het
 
 <p class="tip">Een paar toetsen (`.esc` en alle pijltoetsen) hebben inconsistente `'key'`-waarden in IE9, het is aangeraden de aangeboden aliassen te gebruiken indien IE9 ondersteunt moet worden.</p>
 
-You can also [define custom key modifier aliases](../api/#keyCodes) via the global `config.keyCodes` object:
+Het is mogelijk om [aliassen te definiëren](../api/#keyCodes) via het globale `config.keyCodes`-object:
 
 ``` js
-// enable `v-on:keyup.f1`
+// `v-on:keyup.f1` kan gebruikt worden nadat onderstaande regel is uitgevoerd
 Vue.config.keyCodes.f1 = 112
 ```
 
-## System Modifier Keys
+## Systeemtoetsmodificaties
 
-> New in 2.1.0+
+> Nieuw in 2.1.0+
 
-You can use the following modifiers to trigger mouse or keyboard event listeners only when the corresponding modifier key is pressed:
+Dit zijn de modificaties die gebruikt kunnen worden om te luisteren naar een 'event' van een muisknop of toetsenbordtoets te activeren wanneer de bijhorende systeemtoets ingedrukt is:
 
 - `.ctrl`
 - `.alt`
 - `.shift`
 - `.meta`
 
-> Note: On Macintosh keyboards, meta is the command key (⌘). On Windows keyboards, meta is the windows key (⊞). On Sun Microsystems keyboards, meta is marked as a solid diamond (◆). On certain keyboards, specifically MIT and Lisp machine keyboards and successors, such as the Knight keyboard, space-cadet keyboard, meta is labeled “META”. On Symbolics keyboards, meta is labeled “META” or “Meta”.
+> Merk op: Op Macintosh-toetsenborden is de 'meta'-toets, de 'command'-toets (⌘). Op Windows-toetsenborden is de 'meta'-toets, de Windows-toets (⊞). Op Sun Microsystems-toetsenborden is de 'meta'-toets, de toets met een volle diamant (◆). Op sommige toetsenborden is de 'meta'-toets aangeduid met “META” of “Meta”.
 
-For example:
+Bijvoorbeeld:
 
 ```html
 <!-- Alt + C -->
 <input @keyup.alt.67="clear">
 
 <!-- Ctrl + Click -->
-<div @click.ctrl="doSomething">Do something</div>
+<div @click.ctrl="doIets">Doe iets</div>
 ```
 
-<p class="tip">Note that modifier keys are different from regular keys and when used with `keyup` events, they have to be pressed when the event is emitted. In other words, `keyup.ctrl` will only trigger if you release a key while holding down `ctrl`. It won't trigger if you release the `ctrl` key alone. If you do want such behaviour, use the `keyCode` for `ctrl` instead: `keyup.17`.</p>
+<p class="tip">Merk op dat systeemtoetsen verschillen van normale toetsen wanneer ze gebruikt worden met het `keyup` 'event', ze moeten ingedrukt zijn wanneer het 'event' uitgestuurd wordt. In andere woorden, `keyup.ctrl` zal alleen geactiveerd worden wanneer een toets losgelaten wordt terwijl `ctrl` ingedrukt blijft. Het zal niet geactiveerd worden wanneer alleen de `ctrl`-toets losgelaten wordt. Als zo een gedrag wel gewenst is, gebruik dan `keyCode` in plaats van `ctrl`: `keyup.17`.</p>
 
-### `.exact` Modifier
+### `.exact`-modificatie
 
-> New in 2.5.0+
+> Nieuw in 2.5.0+
 
-The `.exact` modifier allows control of the exact combination of system modifiers needed to trigger an event.
+De `.exact`-modificatie laat toe om de exacte combinatie van systeemtoetsen te bepalen die nodig zijn om een 'event' te activeren.
 
 ``` html
-<!-- this will fire even if Alt or Shift is also pressed -->
-<button @click.ctrl="onClick">A</button>
+<!-- dit zal geactiveerd worden, ook als Alt of Shift ingedrukt is -->
+<button @click.ctrl="bijKlik">A</button>
 
-<!-- this will only fire when Ctrl and no other keys are pressed -->
-<button @click.ctrl.exact="onCtrlClick">A</button>
+<!-- dit zal alleen geactiveerd worden wanneer Ctrl ingedrukt is, niet bij andere toetsen -->
+<button @click.ctrl.exact="bijCtrlKlik">A</button>
 
-<!-- this will only fire when no system modifiers are pressed -->
-<button @click.exact="onClick">A</button>
+<!-- dit zal alleen geactiveerd worden wanneer geen systeemtoets ingedrukt is -->
+<button @click.exact="bijKlik">A</button>
 ```
 
-### Mouse Button Modifiers
+### Muisknopmodificaties
 
-> New in 2.2.0+
+> Nieuw in 2.2.0+
 
 - `.left`
 - `.right`
 - `.middle`
 
-These modifiers restrict the handler to events triggered by a specific mouse button.
+Deze modificaties zorgen ervoor dat de gekoppelde functie alleen aangeroepen wordt wanneer een specifiek muisknop ingedrukt wordt.
 
-## Why Listeners in HTML?
+## Waarom luisteren in HTML?
 
-You might be concerned that this whole event listening approach violates the good old rules about "separation of concerns". Rest assured - since all Vue handler functions and expressions are strictly bound to the ViewModel that's handling the current view, it won't cause any maintenance difficulty. In fact, there are several benefits in using `v-on`:
+Worden de oude regels over 'scheiding van belangen' niet overtreden door te luisteren naar 'events'? Hierover hoeven er geen zorgen te zijn, de functies en expressies voor het afhandelen van een 'event' zijn strikt gekoppeld aan het ViewModel dat de huidige 'view' afhandelt. Het zal niet voor moeilijkheden zorgen tijdens het onderhouden van de code. Er zijn zelfs voordelen aan het gebruik van `v-on`:
 
-1. It's easier to locate the handler function implementations within your JS code by skimming the HTML template.
+1. Het is eenvoudiger om de implementaties van de afhandelfunctie te vinden door te kijken naar de HTML 'template'.
 
-2. Since you don't have to manually attach event listeners in JS, your ViewModel code can be pure logic and DOM-free. This makes it easier to test.
+2. Omdat er niet manueel geluisterd moet worden naar een 'event' in JavaScript, kan de ViewModel-code puur logisch en DOM-vrij zijn. Dit zorgt voor makkelijker te testen code.
 
-3. When a ViewModel is destroyed, all event listeners are automatically removed. You don't need to worry about cleaning it up yourself.
+3. Wanneer een ViewModel vernietigd wordt, worden alle 'events' waarnaar geluisterd wordt automatisch verwijdert.
